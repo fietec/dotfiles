@@ -11,6 +11,8 @@
 (display-line-numbers-mode 1)
 (setq-default display-line-numbers 'relative)
 
+(setq dired-listing-switches "-alh")
+
 ;;; C-Mode
 (setq-default c-basic-offset 4)
 
@@ -18,6 +20,14 @@
 (rc/require 'move-text)
 (global-set-key (kbd "M-p") 'move-text-up)
 (global-set-key (kbd "M-n") 'move-text-down)
+
+
+(setq auto-save-file-name-transforms
+          `((".*" ,(concat user-emacs-directory "auto-save/") t))) 
+
+(setq backup-directory-alist
+      `(("." . ,(expand-file-name
+                 (concat user-emacs-directory "backups")))))
 
 ;;; Compilation
 (require 'project)
@@ -33,7 +43,7 @@
 (setq display-buffer-alist
       '(("\\*compilation\\*"
          (display-buffer-reuse-window display-buffer-at-bottom)
-         (window-height . 0.3))))
+         (window-height . 0.4))))
 (setq compilation-scroll-output t)
 
 (defun my-resize-window-to-percent (direction percent)
@@ -51,7 +61,7 @@
                                    nil))))
 
 ;; Resize window
-(global-set-key (kbd "C-c w <up>")    (lambda () (interactive) (my-resize-window-to-percent 'vertical 30)))
+(global-set-key (kbd "C-c w <up>")    (lambda () (interactive) (my-resize-window-to-percent 'vertical 40)))
 (global-set-key (kbd "C-c w <down>")  (lambda () (interactive) (my-resize-window-to-percent 'vertical 70)))
 
 
