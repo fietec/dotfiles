@@ -27,10 +27,17 @@
   (interactive)
   (let ((default-directory (project-root (project-current t))))
     (call-interactively 'compile)))
-
-(global-set-key (kbd "C-c p") 'compile-in-project-root)
 (global-set-key (kbd "C-c c") 'compile)
+(global-set-key (kbd "C-c p") 'compile-in-project-root)
+
+(setq display-buffer-alist
+      '(("\\*compilation\\*"
+         (display-buffer-reuse-window display-buffer-at-bottom)
+         (window-height . 0.3))))
+(setq compilation-scroll-output t)
 
 (rc/require 'cl-lib)
 (rc/require 'magit)
 (global-set-key (kbd "C-x g") 'magit-status)
+
+(global-set-key (kbd "<backtab>") (lambda () (interactive) (indent-rigidly (region-beginning) (region-end) -4)))
