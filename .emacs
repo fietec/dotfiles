@@ -36,6 +36,25 @@
          (window-height . 0.3))))
 (setq compilation-scroll-output t)
 
+(defun my-resize-window-to-percent (direction percent)
+  "Resize current window in DIRECTION ('horizontal or 'vertical) to PERCENT of the frame."
+  (let* ((frame-size (if (eq direction 'horizontal)
+                         (frame-width)
+                       (frame-height)))
+         (target-size (floor (* frame-size (/ percent 100.0)))))
+    (if (eq direction 'horizontal)
+        (adjust-window-trailing-edge (selected-window)
+                                     (- target-size (window-width))
+                                     t)
+      (adjust-window-trailing-edge (selected-window)
+                                   (- target-size (window-height))
+                                   nil))))
+
+;; Resize window
+(global-set-key (kbd "C-c w <up>")    (lambda () (interactive) (my-resize-window-to-percent 'vertical 30)))
+(global-set-key (kbd "C-c w <down>")  (lambda () (interactive) (my-resize-window-to-percent 'vertical 70)))
+
+
 (rc/require 'cl-lib)
 (rc/require 'magit)
 (global-set-key (kbd "C-x g") 'magit-status)
