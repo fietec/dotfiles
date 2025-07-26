@@ -21,6 +21,16 @@
 (global-set-key (kbd "M-p") 'move-text-up)
 (global-set-key (kbd "M-n") 'move-text-down)
 
+;;; Skip spaces
+(global-set-key (kbd "C-M-f") (lambda () (interactive) (forward-whitespace 1)))
+(global-set-key (kbd "C-M-b") (lambda () (interactive) (forward-whitespace -1)))
+
+;;; Window Switching
+(windmove-default-keybindings)
+(use-package ace-window
+  :ensure t
+  :bind ("M-o" . ace-window))
+
 ;;; Line Deletion
 (defun my/delete-line (&optional arg)
   (interactive "p")
