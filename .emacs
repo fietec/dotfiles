@@ -21,6 +21,16 @@
 (global-set-key (kbd "M-p") 'move-text-up)
 (global-set-key (kbd "M-n") 'move-text-down)
 
+;;; Line Deletion
+(defun my/delete-line (&optional arg)
+  (interactive "p")
+  (let ((start (point)))
+    (if (and (eolp) (not (eq (point) (point-max))))
+        (delete-region (point) (1+ (point)))
+      (delete-region start (progn (move-end-of-line arg) (point))))))
+
+(global-set-key (kbd "C-c k") 'kill-line)
+(global-set-key (kbd "C-k") 'my/delete-line)
 
 (setq auto-save-file-name-transforms
           `((".*" ,(concat user-emacs-directory "auto-save/") t))) 
