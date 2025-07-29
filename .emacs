@@ -42,6 +42,28 @@
 (global-set-key (kbd "C-c k") 'kill-line)
 (global-set-key (kbd "C-k") 'my/delete-line)
 
+;;; Code suggestions
+(use-package company
+  :ensure t
+  :init (global-company-mode))
+
+(use-package company-dabbrev
+  :ensure nil ; comes with company
+  :after company
+  :config
+  (setq company-dabbrev-other-buffers t
+        company-dabbrev-ignore-case t))
+
+;;; Multiple cursors
+(use-package multiple-cursors
+  :ensure t
+  :bind (("C-S-c C-S-c" . mc/edit-lines)
+         ("C->"         . mc/mark-next-like-this)
+         ("C-<"         . mc/mark-previous-like-this)
+         ("C-c C-<"     . mc/mark-all-like-this)))
+
+;;; Auto saving
+
 (setq auto-save-file-name-transforms
           `((".*" ,(concat user-emacs-directory "auto-save/") t))) 
 
