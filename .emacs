@@ -12,9 +12,33 @@
 (setq-default display-line-numbers 'relative)
 
 (setq dired-listing-switches "-alh")
+(setq dired-dwim-target t)
+
+(setq-default tab-width 4)
+(indent-tabs-mode . nil)
 
 ;;; C-Mode
-(setq-default c-basic-offset 4)
+;;; (setq-default c-basic-offset 4)
+(c-add-style "my-c-style"
+             '("linux" ; or "k&r" as a base, try both
+               (c-basic-offset . 4)      ; Indent width
+               (indent-tabs-mode . nil) ; Use spaces
+               (c-offsets-alist
+                (substatement-open . 0)     ; No extra indent for `{`
+                (case-label . +)            ; Indent `case` inside switch
+                (statement-case-open . +)   ; Indent opening `{` in case
+                (statement-case-intro . +)  ; Indent first line inside case
+                )))
+
+(defun my-c-mode-hook ()
+  (c-set-style "my-c-style")
+  (setq indent-tabs-mode nil)) ; Optional: spaces over tabs
+
+(add-hook 'c-mode-hook 'my-c-mode-hook)
+(add-hook 'c++-mode-hook 'my-c-mode-hook)
+
+(global-set-key (kbd "C-M-r") 'revert-buffer)
+
 
 ;;; Move Text
 (rc/require 'move-text)
